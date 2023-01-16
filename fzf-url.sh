@@ -29,11 +29,13 @@ open_url() {
 limit='screen'
 [[ $# -ge 2 ]] && limit=$2
 
-if [[ $limit == 'screen' ]]; then
-    content="$(tmux capture-pane -J -p)"
-else
-    content="$(tmux capture-pane -J -p -S -"$limit")"
-fi
+content="$(cat $HOME/.zsh_history)"
+
+# if [[ $limit == 'screen' ]]; then
+#     content="$(tmux capture-pane -J -p)"
+# else
+#     content="$(tmux capture-pane -J -p -S -"$limit")"
+# fi
 
 urls=$(echo "$content" |grep -oE '(https?|ftp|file):/?//[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]')
 wwws=$(echo "$content" |grep -oE '(http?s://)?www\.[a-zA-Z](-?[a-zA-Z0-9])+\.[a-zA-Z]{2,}(/\S+)*' | grep -vE '^https?://' |sed 's/^\(.*\)$/http:\/\/\1/')
